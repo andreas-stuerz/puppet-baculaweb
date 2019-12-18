@@ -1,1 +1,13 @@
 ---
+baculaweb::version: '8.3.3'
+baculaweb::archive_name: "bacula-web-%{lookup('baculaweb::version')}.tgz"
+baculaweb::archive_path: "%{lookup('baculaweb::extract_base_dir')}/%{lookup('baculaweb::archive_name')}"
+baculaweb::mirror_base_url: "https://github.com/bacula-web/bacula-web/releases/download"
+baculaweb::mirror: "%{lookup('baculaweb::mirror_base_url')}/v%{lookup('baculaweb::version')}/%{lookup('baculaweb::archive_name')}"
+baculaweb::extract_base_dir: '/opt/bacula-web'
+baculaweb::extract_dir: "%{lookup('baculaweb::extract_base_dir')}/v%{lookup('baculaweb::version')}"
+baculaweb::extract_creates: "%{lookup('baculaweb::extract_dir')}/bacula_web"
+baculaweb::root_dir: '/var/www/html'
+baculaweb::user: 'root'
+baculaweb::group: 'root'
+baculaweb::archive_symlink_to_root_dir: true

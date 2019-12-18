@@ -1,8 +1,39 @@
-# @summary A short summary of the purpose of this class
+# @summary
+#   Download the baculaweb source and install it in the root_dir
 #
-# A description of what this class does
+# @api private
 #
-# @example
-#   include baculaweb::install
 class baculaweb::install {
+
+  file { $baculaweb::extract_dir:
+    ensure  => directory,
+    recurse => true
+  }
+
+  archive { $baculaweb::archive_path:
+    source       => $baculaweb::mirror,
+    extract      => true,
+    extract_path => $baculaweb::extract_dir,
+    creates      => $baculaweb::extract_creates,
+    cleanup      => false,
+    require      => File[$baculaweb::extract_dir]
+  }
+
+  # exec { 'chown_baculaweb_directory':
+  #   command     => "chown -R ${::zookeeper::user}:${::zookeeper::group} ${::zookeeper::archive_install_dir}/${filename}",
+  #   path        => ['/bin','/sbin'],
+  #   refreshonly => true,
+  #   require     => $symlink_require,
+  # }
+
+  if $baculaweb::archive_symlink_to_root_dir {
+    file { $baculaweb::root_dir:
+      ensure  => link,
+      target  => $baculaweb::extract_creates,
+      owner   => $baculaweb::user,
+      group   => $baculaweb::group,
+      require => Archive[$baculaweb::archive_path],
+    }
+  }
+
 }

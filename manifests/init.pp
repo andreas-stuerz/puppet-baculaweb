@@ -16,6 +16,9 @@ class baculaweb (
   Stdlib::Compat::Absolute_path $extract_creates,
   Boolean $archive_symlink_to_root_dir,
   Stdlib::Compat::Absolute_path $root_dir,
+  Stdlib::Compat::Absolute_path $config_path,
+  Stdlib::Compat::Absolute_path $cache_path,
+
 ) {
   contain baculaweb::install
   contain baculaweb::config

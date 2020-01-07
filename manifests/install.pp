@@ -23,16 +23,13 @@ class baculaweb::install {
     require       => File[$baculaweb::extract_dir]
   }
 
-
   if $baculaweb::archive_symlink_to_root_dir {
     file { $baculaweb::root_dir:
       ensure  => link,
       target  => $baculaweb::extract_creates,
       owner   => $baculaweb::user,
       group   => $baculaweb::group,
-      require => [
-        Archive[$baculaweb::archive_path]
-      ]
+      require => Archive[$baculaweb::archive_path]
     }
   }
 

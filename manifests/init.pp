@@ -18,6 +18,23 @@ class baculaweb (
   Stdlib::Compat::Absolute_path $root_dir,
   Stdlib::Compat::Absolute_path $config_path,
   Stdlib::Compat::Absolute_path $cache_path,
+  Stdlib::Compat::Absolute_path $assets_protected_path,
+  Boolean $show_inactive_clients,
+  Boolean $hide_empty_pools,
+  String $datetime_format,
+  Boolean $enable_users_auth,
+  Boolean $debug,
+  Enum['en_US', 'be_BY', 'ca_ES', 'pl_PL', 'ru_RU', 'zh_CN', 'no_NO',
+    'ja_JP', 'sv_SE', 'es_ES', 'de_DE', 'it_IT', 'fr_FR', 'pt_BR', 'nl_NL'] $language,
+  Array[Struct[{
+    label     => String,
+    host      => Optional[String],
+    login     => Optional[String],
+    password  => Optional[String],
+    db_name   => Optional[String],
+    db_type   => Enum['mysql', 'pgsql', 'sqlite'],
+    db_port   => Optional[Integer],
+  }]] $catalog_db,
 
 ) {
   contain baculaweb::install

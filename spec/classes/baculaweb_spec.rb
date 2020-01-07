@@ -9,7 +9,6 @@ describe 'baculaweb' do
       it { is_expected.to contain_class('baculaweb::install') }
       it { is_expected.to contain_class('baculaweb::config') }
       it { is_expected.to contain_class('baculaweb::install').that_comes_before('Class[baculaweb::config]') }
-
     end
   end
 end

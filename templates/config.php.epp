@@ -1,0 +1,29 @@
+<?php
+// Show inactive clients (false by default)
+$config['show_inactive_clients'] = <%= $baculaweb::show_inactive_clients -%>;
+
+// Hide empty pools (displayed by default)
+$config['hide_empty_pools'] = <%= $baculaweb::hide_empty_pools -%>;
+
+// Custom datetime format (by default: Y-m-d H:i:s)
+// Examples
+// $config['datetime_format'] = 'd/m/Y H:i:s';
+$config['datetime_format'] = '<%= $baculaweb::datetime_format -%>';
+
+// Security
+$config['enable_users_auth'] = <%= $baculaweb::enable_users_auth -%>;
+
+// Debug mode
+$config['debug'] = <%= $baculaweb::debug -%>;
+
+// Translations
+$config['language'] = '<%= $baculaweb::language -%>';
+
+// Database connection parameters
+<% $baculaweb::catalog_db.each |$index, $catalog| { -%>
+$config[<%= $index %>] = [
+<% $catalog.each |$key, $value| { -%>
+  '<%= $key -%>' => '<%= $value -%>',
+<% } -%>
+];
+<% } -%>

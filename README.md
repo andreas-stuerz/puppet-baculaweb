@@ -44,7 +44,26 @@ If your most recent release breaks compatibility or requires particular steps fo
 The very basic steps needed for a user to get the module up and running. This can include setup steps, if necessary, or it can be an example of the most basic use of the module.
 
 ## Usage
-
+```
+baculaweb::catalog_db:
+  - label: 'MySQL backup catalog'
+    host: 'localhost'
+    login: 'bacula'
+    password: 'verystrongpassword'
+    db_name: 'bacula'
+    db_type: 'mysql'
+    db_port: 3306
+  - label: 'PostgreSQL backup catalog'
+    host: 'localhost'
+    login: 'bacula'
+    password: 'verystrongpassword'
+    db_name: 'bacula'
+    db_type: 'pgsql'
+    db_port: 5432
+  - label: 'SQLite backup catalog'
+    db_name: '/path/to/database'
+    db_type: 'sqlite'
+```
 Include usage examples for common use cases in the **Usage** section. Show your users how to use your module to solve problems, and be sure to include code examples. Include three to five examples of the most important or common tasks a user can accomplish with your module. Show users how to accomplish more complex tasks that involve different types, classes, and functions working in tandem.
 
 ## Reference

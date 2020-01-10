@@ -3,7 +3,7 @@
 #### Table of Contents
 
 1. [Overview](#overview)
-2. [Requirements](#Req)
+2. [Requirements](#requirements)
     * [What baculaweb affects](#what-baculaweb-affects)
     * [Setup requirements](#setup-requirements)
     * [Beginning with baculaweb](#beginning-with-baculaweb)

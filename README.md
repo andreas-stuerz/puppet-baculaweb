@@ -97,5 +97,3 @@ In the Development section, tell other users the ground rules for contributing t
 
 If you aren't using changelog, put your release notes here (though you should consider using changelog). You can also add any additional sections you feel are necessary or important to include here. Please use the `## ` header.
 
-
-[]: #requirements

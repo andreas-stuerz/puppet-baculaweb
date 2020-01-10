@@ -1,13 +1,9 @@
 # baculaweb
 
-Welcome to your new module. A short overview of the generated parts can be found in the PDK documentation at https://puppet.com/pdk/latest/pdk_generating_modules.html .
-
-The README template below provides a starting point with details about what information to include in your README.
-
 #### Table of Contents
 
-1. [Description](#description)
-2. [Setup - The basics of getting started with baculaweb](#setup)
+1. [Overview](#overview)
+2. [Requirements](#Req)
     * [What baculaweb affects](#what-baculaweb-affects)
     * [Setup requirements](#setup-requirements)
     * [Beginning with baculaweb](#beginning-with-baculaweb)
@@ -15,29 +11,25 @@ The README template below provides a starting point with details about what info
 4. [Limitations - OS compatibility, etc.](#limitations)
 5. [Development - Guide for contributing to the module](#development)
 
-## Description
+## Overview
 
-Briefly tell users why they might want to use your module. Explain what your module does and what kind of problems users can solve with it.
+This module install and configures the baculaweb a web based reporting and monitoring tool for Bacula.
 
-This should be a fairly short description helps the user decide if your module is what they want.
+You can find the baculaweb documention here: https://www.bacula-web.org/ 
 
-## Setup
+The module only install and configure the webapp itself. You still require a webserver (nginx or apache) with php.
 
-### What baculaweb affects **OPTIONAL**
+## Requirements
 
-If it's obvious what your module touches, you can skip this section. For example, folks can probably figure out that your mysql_instance module affects their MySQL instances.
-
-If there's more that they should know about, though, this is the place to mention:
-
-* Files, packages, services, or operations that the module will alter, impact, or execute.
-* Dependencies that your module automatically installs.
-* Warnings or other important notices.
+* Puppet >= 4.10.0 < 7.0.0
+* [puppetlabs/stdlib](https://github.com/puppetlabs/puppetlabs-stdlib)
+* [puppet/archive](https://github.com/voxpupuli/puppet-archive)
 
 ### Setup Requirements **OPTIONAL**
 
-If your module requires anything extra before setting up (pluginsync enabled, another module, etc.), mention it here.
-
-If your most recent release breaks compatibility or requires particular steps for upgrading, you might want to include an additional "Upgrading" section here.
+Recommended for apache + php setup:
+* [puppetlabs/apache](https://github.com/puppetlabs/puppetlabs-apache)
+* [puppet/php](https://github.com/voxpupuli/puppet-php)
 
 ### Beginning with baculaweb
 
@@ -104,3 +96,6 @@ In the Development section, tell other users the ground rules for contributing t
 ## Release Notes/Contributors/Etc. **Optional**
 
 If you aren't using changelog, put your release notes here (though you should consider using changelog). You can also add any additional sections you feel are necessary or important to include here. Please use the `## ` header.
+
+
+[]: #requirements

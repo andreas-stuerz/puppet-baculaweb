@@ -2,21 +2,21 @@
 
 #### Table of Contents
 
-1. [Overview](#overview)
-1. [Requirements](#requirements)
-    * [Optional Setup Requirements](#optional-setup-requirements)
-    * [Beginning with baculaweb](#beginning-with-baculaweb)
-1. [Usage](#usage)
-    * [Install and enable baculaweb](#install-and-enable-baculaweb)
-    * [Configure one or more bacula catalog databases (mysql, pgsql or sqlite)](#configure-one-or-more-bacula-catalog-databases--mysql--pgsql-or-sqlite--)
-    * [Configure custom directories, permissions and version of baculaweb](#configure-custom-directories--permissions-and-version-of-baculaweb)
-    * [Configure baculaweb](#configure-baculaweb)
-1. [Reference](#reference)
-1. [Limitations](#limitations)
-1. [Development](#development)
-    * [Setup testing and development environment (MacOSX)](#setup-testing-and-development-environment--macosx-)
-    * [Running acceptance Tests](#running-acceptance-tests)
-1. [Release Notes/Contributors/Etc. **Optional**](#release-notes-contributors-etc---optional--)
+- [Overview](#overview)
+- [Requirements](#requirements)
+  - [Optional Setup Requirements](#optional-setup-requirements)
+  - [Beginning with baculaweb](#beginning-with-baculaweb)
+- [Usage](#usage)
+  - [Install and enable baculaweb](#install-and-enable-baculaweb)
+  - [Configure bacula catalog databases](#configure-bacula-catalog-databases)
+  - [Configure custom installation options](#configure-custom-installation-options)
+  - [Configure baculaweb](#configure-baculaweb)
+- [Reference](#reference)
+- [Limitations](#limitations)
+- [Development](#development)
+  - [Setup testing and development environment (MacOSX)](#setup-testing-and-development-environment-macosx)
+  - [Running acceptance Tests](#running-acceptance-tests)
+- [Release Notes/Contributors/Etc. **Optional**](#release-notescontributorsetc-optional)
 
 ## Overview
 
@@ -52,7 +52,7 @@ All parameters for the baculaweb module are contained within the main baculaweb 
 include baculaweb
 ```
 
-### Configure one or more bacula catalog databases (mysql, pgsql or sqlite)
+### Configure bacula catalog databases
 To get baculaweb up and running configure at least one bacula catalog database with the paramter catalog_db.
 
 See the following example for the different catalog database types:
@@ -110,7 +110,9 @@ baculaweb::catalog_db:
     db_type: 'sqlite'
 ```
 
-### Configure custom directories, permissions and version of baculaweb
+### Configure custom installation options
+
+Configure custom directories, ownerships and version: 
 
 ```
 class { 'baculaweb':

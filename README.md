@@ -3,20 +3,20 @@
 #### Table of Contents
 
 1. [Overview](#overview)
-2. [Requirements](#requirements)
+1. [Requirements](#requirements)
   * [Optional Setup Requirements](#optional-setup-requirements)
   * [Beginning with baculaweb](#beginning-with-baculaweb)
-3. [Usage](#usage)
+1. [Usage](#usage)
   * [Install and enable baculaweb](#install-and-enable-baculaweb)
   * [Configure one or more bacula catalog databases (mysql, pgsql or sqlite) ***Required***](#configure-one-or-more-bacula-catalog-databases--mysql--pgsql-or-sqlite-----required---)
   * [Configure custom directories, permissions and version of baculaweb](#configure-custom-directories--permissions-and-version-of-baculaweb)
   * [Configure baculaweb](#configure-baculaweb)
-4. [Reference](#reference)
-5. [Limitations](#limitations)
-6. [Development](#development)
+1. [Reference](#reference)
+1. [Limitations](#limitations)
+1. [Development](#development)
   * [Setup testing and development environment (MacOSX)](#setup-testing-and-development-environment--macosx-)
   * [Running acceptance Tests](#running-acceptance-tests)
-7. [Release Notes/Contributors/Etc. **Optional**](#release-notes-contributors-etc---optional--)
+1. [Release Notes/Contributors/Etc. **Optional**](#release-notes-contributors-etc---optional--)
 
 ## Overview
 

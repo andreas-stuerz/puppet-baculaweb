@@ -4,12 +4,19 @@
 
 1. [Overview](#overview)
 2. [Requirements](#requirements)
-    * [What baculaweb affects](#what-baculaweb-affects)
-    * [Setup requirements](#setup-requirements)
-    * [Beginning with baculaweb](#beginning-with-baculaweb)
-3. [Usage - Configuration options and additional functionality](#usage)
-4. [Limitations - OS compatibility, etc.](#limitations)
-5. [Development - Guide for contributing to the module](#development)
+  * [Optional Setup Requirements](#optional-setup-requirements)
+  * [Beginning with baculaweb](#beginning-with-baculaweb)
+3. [Usage](#usage)
+  * [Install and enable baculaweb](#install-and-enable-baculaweb)
+  * [Configure one or more bacula catalog databases (mysql, pgsql or sqlite) ***Required***](#configure-one-or-more-bacula-catalog-databases--mysql--pgsql-or-sqlite-----required---)
+  * [Configure custom directories, permissions and version of baculaweb](#configure-custom-directories--permissions-and-version-of-baculaweb)
+  * [Configure baculaweb](#configure-baculaweb)
+4. [Reference](#reference)
+5. [Limitations](#limitations)
+6. [Development](#development)
+  * [Setup testing and development environment (MacOSX)](#setup-testing-and-development-environment--macosx-)
+  * [Running acceptance Tests](#running-acceptance-tests)
+7. [Release Notes/Contributors/Etc. **Optional**](#release-notes-contributors-etc---optional--)
 
 ## Overview
 
@@ -25,7 +32,7 @@ The module only install and configure the webapp itself. You still require a web
 * [puppetlabs/stdlib](https://github.com/puppetlabs/puppetlabs-stdlib)
 * [puppet/archive](https://github.com/voxpupuli/puppet-archive)
 
-### Setup Requirements **OPTIONAL**
+### Optional Setup Requirements
 
 Recommended modules for apache + php setup:
 * [puppetlabs/apache](https://github.com/puppetlabs/puppetlabs-apache)
@@ -45,7 +52,7 @@ All parameters for the baculaweb module are contained within the main baculaweb 
 include baculaweb
 ```
 
-###Configure one or more bacula catalog databases (mysql, pgsql or sqlite) ***Required***
+### Configure one or more bacula catalog databases (mysql, pgsql or sqlite) ***Required***
 To get baculaweb up and running configure at least one bacula catalog database with the paramter catalog_db.
 
 See the following example for the different catalog database types:
@@ -103,7 +110,7 @@ baculaweb::catalog_db:
     db_type: 'sqlite'
 ```
 
-###Configure custom directories, permissions and version of baculaweb
+### Configure custom directories, permissions and version of baculaweb
 
 ```
 class { 'baculaweb':
@@ -126,7 +133,7 @@ baculaweb:
   group: 'apache'
 ```
 
-###Configure baculaweb
+### Configure baculaweb
 
 You find an overview of the baculaweb settings here: http://docs.bacula-web.org/en/latest/02_install/configure.html
 
@@ -176,41 +183,74 @@ baculaweb:
 
 ## Reference
 
-This section is deprecated. Instead, add reference information to your code as Puppet Strings comments, and then use Strings to generate a REFERENCE.md in your module. For details on how to add code comments and generate documentation with Strings, see the Puppet Strings [documentation](https://puppet.com/docs/puppet/latest/puppet_strings.html) and [style guide](https://puppet.com/docs/puppet/latest/puppet_strings_style.html)
-
-If you aren't ready to use Strings yet, manually create a 
- in the root of your module directory and list out each of your module's classes, defined types, facts, functions, Puppet tasks, task plans, and resource types and providers, along with the parameters for each.
-
-For each element (class, defined type, function, and so on), list:
-
-  * The data type, if applicable.
-  * A description of what the element does.
-  * Valid values, if the data type doesn't make it obvious.
-  * Default value, if any.
-
-For example:
-
-```
-### `pet::cat`
-
-#### Parameters
-
-##### `meow`
-
-Enables vocalization in your cat. Valid options: 'string'.
-
-Default: 'medium-loud'.
-```
+See [REFERENCE.md](REFERENCE.md)
 
 ## Limitations
 
-In the Limitations section, list any incompatibilities, known issues, or other warnings.
+For a list of supported operating systems, see [metadata.json](metadata.json)
 
 ## Development
 
-In the Development section, tell other users the ground rules for contributing to your project and how they should submit their work.
+This module uses [puppet_litmus](https://github.com/puppetlabs/puppet_litmus) for running acceptance tests.
+
+### Setup testing and development environment (MacOSX)
+
+Install required software with [brew](https://brew.sh/)
+```
+brew cask install docker
+brew cask install puppetlabs/puppet/pdk
+brew cask install puppet-bolt
+brew install rbenv
+rbenv init
+echo 'eval "$(rbenv init -)"' >> $HOME/.zshrc
+curl -fsSL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-doctor | bash
+rbenv install 2.6.5
+```
+
+Then execute the following command in the root dir of the module:
+```
+rbenv local 2.6.5
+gem install bundle
+bundle install --path .bundle/gems/
+
+```
+
+To configure the CentOS docker container:
+```
+bundle exec rake 'litmus:provision_list[default]'
+bolt command run 'yum -y install http php php php-gettext php-mysql php-pdo php-pgsql php-process' -n localhost:2222 -i inventory.yaml
+bolt command run 'service httpd start' -n localhost:2222 -i inventory.yaml 
+
+docker exec -it waffleimage_centos7_-2222 /bin/bash
+
+vim /etc/httpd/conf.d/bacula-web.conf
+<Directory /var/www/html/bacula-web>
+  AllowOverride All
+</Directory>
+
+vim /etc/php.ini
+date.timezone = Europe/Berlin
+
+service httpd restart
+
+```
+
+Build ssh tunnel and access the baculaweb application:
+```
+ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@localhost -p 2222 -L 27000:localhost:80 -Nf
+http://localhost:27000/
+```
+http://localhost:27000/
+
+### Running acceptance Tests
+
+Update module code in container & run tests:
+```
+bolt command run 'puppet module uninstall andeman-baculaweb' -n localhost:2222 -i inventory.yaml 
+bundle exec rake litmus:install_module
+bundle exec rake litmus:acceptance:parallel
+```
 
 ## Release Notes/Contributors/Etc. **Optional**
 
-If you aren't using changelog, put your release notes here (though you should consider using changelog). You can also add any additional sections you feel are necessary or important to include here. Please use the `## ` header.
-
+See [CHANGELOG.md](CHANGELOG.md)

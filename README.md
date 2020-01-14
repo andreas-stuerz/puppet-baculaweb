@@ -8,7 +8,7 @@
     * [Beginning with baculaweb](#beginning-with-baculaweb)
 1. [Usage](#usage)
     * [Install and enable baculaweb](#install-and-enable-baculaweb)
-    * [Configure one or more bacula catalog databases (mysql, pgsql or sqlite)](#configure-one-or-more-bacula-catalog-databases--mysql--pgsql-or-sqlite-----required---)
+    * [Configure one or more bacula catalog databases (mysql, pgsql or sqlite)](#configure-one-or-more-bacula-catalog-databases--mysql--pgsql-or-sqlite--)
     * [Configure custom directories, permissions and version of baculaweb](#configure-custom-directories--permissions-and-version-of-baculaweb)
     * [Configure baculaweb](#configure-baculaweb)
 1. [Reference](#reference)

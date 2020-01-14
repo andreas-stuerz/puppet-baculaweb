@@ -16,7 +16,7 @@
 - [Development](#development)
   - [Setup testing and development environment (MacOSX)](#setup-testing-and-development-environment-macosx)
   - [Running acceptance Tests](#running-acceptance-tests)
-- [Release Notes/Contributors/Etc. **Optional**](#release-notescontributorsetc-optional)
+- [Release Notes/Contributors/Etc. **Optional**](#release-notes)
 
 ## Overview
 
@@ -253,6 +253,6 @@ bundle exec rake litmus:install_module
 bundle exec rake litmus:acceptance:parallel
 ```
 
-## Release Notes/Contributors/Etc. **Optional**
+## Release Notes
 
 See [CHANGELOG.md](CHANGELOG.md)

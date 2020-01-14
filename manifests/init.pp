@@ -44,3 +44,5 @@ class baculaweb (
   -> Class['::baculaweb::config']
 
 }
+
+

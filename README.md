@@ -27,36 +27,152 @@ The module only install and configure the webapp itself. You still require a web
 
 ### Setup Requirements **OPTIONAL**
 
-Recommended for apache + php setup:
+Recommended modules for apache + php setup:
 * [puppetlabs/apache](https://github.com/puppetlabs/puppetlabs-apache)
 * [puppet/php](https://github.com/voxpupuli/puppet-php)
 
-### Beginning with baculaweb
+The needed requirements for the webserver and for php are documented here: 
 
-The very basic steps needed for a user to get the module up and running. This can include setup steps, if necessary, or it can be an example of the most basic use of the module.
+http://docs.bacula-web.org/en/latest/02_install/requirements.html
+
+### Beginning with baculaweb
+All parameters for the baculaweb module are contained within the main baculaweb class, so for any function of the module, set the options you want. All configuration parameters can be assigned hiera. The default values are also lookuped up by hiera. See the common usages below for examples.
 
 ## Usage
+
+### Install and enable baculaweb
+```
+include baculaweb
+```
+
+###Configure one or more bacula catalog databases (mysql, pgsql or sqlite) ***Required***
+To get baculaweb up and running configure at least one bacula catalog database with the paramter catalog_db.
+
+See the following example for the different catalog database types:
+
+```
+class { 'baculaweb':
+  catalog_db => [
+    {
+      'label'    => 'EXAMPLE: MySQL backup catalog',
+      'host'     => 'localhost',
+      'login'    => 'bacula',
+      'password' => 'verystrongpassword',
+      'db_name'  => 'bacula',
+      'db_type'  => 'mysql',
+      'db_port'  => 3306,
+    },
+    {
+      'label'    => 'EXAMPLE: PostgreSQL backup catalog',
+      'host'     => 'localhost',
+      'login'    => 'bacula',
+      'password' => 'verystrongpassword',
+      'db_name'  => 'bacula',
+      'db_type'  => 'mysql',
+      'db_port'  => 3306,
+    },
+    {
+      'label'   => 'EXAMPLE: SQLite backup catalog',
+      'db_name' => '/path/to/database',
+      'db_type' => 'sqlite',
+    },
+  ]
+}
+```
+
+Using Hiera:
+
 ```
 baculaweb::catalog_db:
-  - label: 'MySQL backup catalog'
+  - label: 'EXAMPLE: MySQL backup catalog'
     host: 'localhost'
     login: 'bacula'
     password: 'verystrongpassword'
     db_name: 'bacula'
     db_type: 'mysql'
     db_port: 3306
-  - label: 'PostgreSQL backup catalog'
+  - label: 'EXAMPLE: PostgreSQL backup catalog'
     host: 'localhost'
     login: 'bacula'
     password: 'verystrongpassword'
     db_name: 'bacula'
     db_type: 'pgsql'
     db_port: 5432
-  - label: 'SQLite backup catalog'
+  - label: 'EXAMPLE: SQLite backup catalog'
     db_name: '/path/to/database'
     db_type: 'sqlite'
 ```
-Include usage examples for common use cases in the **Usage** section. Show your users how to use your module to solve problems, and be sure to include code examples. Include three to five examples of the most important or common tasks a user can accomplish with your module. Show users how to accomplish more complex tasks that involve different types, classes, and functions working in tandem.
+
+###Configure custom directories, permissions and version of baculaweb
+
+```
+class { 'baculaweb':
+  version           => '8.3.3'
+  root_dir          => '/var/www/html/bacula-web',
+  extract_base_dir  => '/opt/bacula-web',
+  user              => 'apache',
+  group             => 'apache'
+}
+```
+
+Using Hiera:
+
+```
+baculaweb:
+  version: '8.3.3'
+  root_dir: '/var/www/html/bacula-web'
+  extract_base_dir: '/opt/bacula-web'
+  user: 'apache'
+  group: 'apache'
+```
+
+###Configure baculaweb
+
+You find an overview of the baculaweb settings here: http://docs.bacula-web.org/en/latest/02_install/configure.html
+
+See the following example to configure the settings:
+
+```
+class { 'baculaweb':
+  language              => 'en_US',
+  hide_empty_pools      => true,
+  show_inactive_clients => true,
+  datetime_format       => 'Y-m-d H:i:s',
+  enable_users_auth     => false,
+  debug                 => false,
+  catalog_db            => [
+    {
+      'label'    => 'MySQL backup catalog',
+      'host'     => 'localhost',
+      'login'    => 'bacula',
+      'password' => 'verystrongpassword',
+      'db_name'  => 'bacula',
+      'db_type'  => 'mysql',
+      'db_port'  => 3306,
+    },
+  ]
+}
+```
+
+Using Hiera:
+
+```
+baculaweb:
+  language: 'en_US'
+  hide_empty_pools: true
+  show_inactive_clients: true
+  datetime_format: 'Y-m-d H:i:s'
+  enable_users_auth: false
+  debug: false
+  catalog_db:
+    - label: 'MySQL backup catalog'
+      host: 'localhost'
+      login: 'bacula'
+      password: 'verystrongpassword'
+      db_name: 'bacula'
+      db_type: 'mysql'
+      db_port: 3306
+```
 
 ## Reference
 

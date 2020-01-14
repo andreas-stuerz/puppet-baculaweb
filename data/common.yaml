@@ -14,12 +14,12 @@ baculaweb::assets_protected_path: "%{lookup('baculaweb::root_dir')}/application/
 baculaweb::user: 'apache'
 baculaweb::group: 'apache'
 baculaweb::archive_symlink_to_root_dir: true
-baculaweb::show_inactive_clients: true
+baculaweb::language: 'en_US'
 baculaweb::hide_empty_pools: true
+baculaweb::show_inactive_clients: true
 baculaweb::datetime_format: 'Y-m-d H:i:s'
 baculaweb::enable_users_auth: false
 baculaweb::debug: false
-baculaweb::language: 'en_US'
 baculaweb::catalog_db: []
 
 

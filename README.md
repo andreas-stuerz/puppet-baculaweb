@@ -8,7 +8,7 @@
     * [Beginning with baculaweb](#beginning-with-baculaweb)
 1. [Usage](#usage)
     * [Install and enable baculaweb](#install-and-enable-baculaweb)
-    * [Configure one or more bacula catalog databases (mysql, pgsql or sqlite) ***Required***](#configure-one-or-more-bacula-catalog-databases--mysql--pgsql-or-sqlite-----required---)
+    * [Configure one or more bacula catalog databases (mysql, pgsql or sqlite)](#configure-one-or-more-bacula-catalog-databases--mysql--pgsql-or-sqlite-----required---)
     * [Configure custom directories, permissions and version of baculaweb](#configure-custom-directories--permissions-and-version-of-baculaweb)
     * [Configure baculaweb](#configure-baculaweb)
 1. [Reference](#reference)
@@ -52,7 +52,7 @@ All parameters for the baculaweb module are contained within the main baculaweb 
 include baculaweb
 ```
 
-### Configure one or more bacula catalog databases (mysql, pgsql or sqlite) ***Required***
+### Configure one or more bacula catalog databases (mysql, pgsql or sqlite)
 To get baculaweb up and running configure at least one bacula catalog database with the paramter catalog_db.
 
 See the following example for the different catalog database types:

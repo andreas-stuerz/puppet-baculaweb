@@ -1,10 +1,12 @@
 {
   "name": "andeman-baculaweb",
   "version": "0.1.0",
-  "author": "Andreas Stürz",
-  "summary": "",
+  "author": "Andreas Stuerz",
+  "summary": "Puppet module for baculaweb - a web based reporting and monitoring tool for Bacula",
   "license": "Apache-2.0",
-  "source": "",
+  "source": "https://github.com/andeman/puppet-baculaweb",
+  "project_page": "https://github.com/andeman/puppet-baculaweb",
+  "issues_url": "https://github.com/andeman/puppet-baculaweb/issues",
   "dependencies": [
     {
       "name": "puppetlabs/stdlib",

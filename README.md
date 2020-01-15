@@ -15,8 +15,10 @@
 - [Limitations](#limitations)
 - [Development](#development)
   - [Setup testing and development environment (MacOSX)](#setup-testing-and-development-environment-macosx)
-  - [Running acceptance Tests](#running-acceptance-tests)
-- [Release Notes/Contributors/Etc. **Optional**](#release-notes)
+  - [Running acceptance tests](#running-acceptance-tests)
+  - [Running unit tests](#running-unit-tests)
+  
+- [Release Notes](#release-notes)
 
 ## Overview
 
@@ -244,13 +246,18 @@ http://localhost:27000/
 ```
 http://localhost:27000/
 
-### Running acceptance Tests
+### Running acceptance tests
 
 Update module code in container & run tests:
 ```
 bolt command run 'puppet module uninstall andeman-baculaweb' -n localhost:2222 -i inventory.yaml 
 bundle exec rake litmus:install_module
 bundle exec rake litmus:acceptance:parallel
+```
+
+### Running unit tests
+```
+pdk test unit
 ```
 
 ## Release Notes

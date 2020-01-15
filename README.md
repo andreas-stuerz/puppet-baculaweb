@@ -4,20 +4,19 @@
 
 - [Overview](#overview)
 - [Requirements](#requirements)
-  - [Optional Setup Requirements](#optional-setup-requirements)
-  - [Beginning with baculaweb](#beginning-with-baculaweb)
+    - [Optional Setup Requirements](#optional-setup-requirements)
+- [Beginning with baculaweb](#beginning-with-baculaweb)
 - [Usage](#usage)
-  - [Install and enable baculaweb](#install-and-enable-baculaweb)
-  - [Configure bacula catalog databases](#configure-bacula-catalog-databases)
-  - [Configure custom installation options](#configure-custom-installation-options)
-  - [Configure baculaweb](#configure-baculaweb)
+    - [Install and enable baculaweb](#install-and-enable-baculaweb)
+    - [Configure bacula catalog databases](#configure-bacula-catalog-databases)
+    - [Configure custom installation options](#configure-custom-installation-options)
+    - [Configure baculaweb](#configure-baculaweb)
 - [Reference](#reference)
 - [Limitations](#limitations)
 - [Development](#development)
   - [Setup testing and development environment (MacOSX)](#setup-testing-and-development-environment-macosx)
   - [Running acceptance tests](#running-acceptance-tests)
   - [Running unit tests](#running-unit-tests)
-  
 - [Release Notes](#release-notes)
 
 ## Overview

@@ -10,8 +10,8 @@ end
 
 RSpec.configure do |c|
   c.before :suite do
-    LitmusHelper.instance.run_shell("puppet module install puppetlabs-apache")
-    rLitmusHelper.instance.run_shell("puppet module install puppetlabs-php")
+    LitmusHelper.instance.run_shell('puppet module install puppetlabs-apache')
+    LitmusHelper.instance.run_shell('puppet module install puppet/php')
     #if os[:family] == 'debian' || os[:family] == 'ubuntu'
     #  # needed for the puppet fact
     #  apply_manifest("package { 'lsb-release': ensure => installed, }", expect_failures: false)

@@ -40,4 +40,3 @@
 /.yardopts
 /spec/
 /.vscode/
-run_tests.sh

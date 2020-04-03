@@ -12,6 +12,7 @@
     enabled: false
   branches:
     - release
+    - development
   use_litmus: true
   litmus:
     provision_list:
@@ -28,10 +29,6 @@ Gemfile:
   optional:
     ":development":
       - gem: puppet-lint-i18n
-#      - gem: github_changelog_generator
-#        git: https://github.com/skywinder/github-changelog-generator
-#        ref: 20ee04ba1234e9e83eb2ffb5056e23d641c7a018
-#        condition: Gem::Version.new(RUBY_VERSION.dup) >= Gem::Version.new('2.2.2')
 Rakefile:
   requires:
     - puppet_pot_generator/rake_tasks

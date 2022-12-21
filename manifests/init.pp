@@ -81,14 +81,10 @@ class baculaweb (
     db_type   => Enum['mysql', 'pgsql', 'sqlite'],
     db_port   => Optional[Integer],
   }]] $catalog_db,
-
 ) {
   contain baculaweb::install
   contain baculaweb::config
 
   Class['::baculaweb::install']
   -> Class['::baculaweb::config']
-
 }
-
-

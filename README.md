@@ -30,6 +30,7 @@ The module only install and configure the webapp itself. You still require a web
 ## Requirements
 
 * Puppet >= 4.10.0 < 7.0.0
+* Bacula-Web 8.6.0 or later (due to breaking changes in this release)
 * [puppetlabs/stdlib](https://github.com/puppetlabs/puppetlabs-stdlib)
 * [puppet/archive](https://github.com/voxpupuli/puppet-archive)
 

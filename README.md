@@ -29,7 +29,8 @@ The module only install and configure the webapp itself. You still require a web
 
 ## Requirements
 
-* Puppet >= 4.10.0 < 7.0.0
+* Puppet >= 6.0.0
+* Bacula-Web 8.6.0 or later (due to breaking changes in this release)
 * [puppetlabs/stdlib](https://github.com/puppetlabs/puppetlabs-stdlib)
 * [puppet/archive](https://github.com/voxpupuli/puppet-archive)
 
@@ -117,7 +118,7 @@ Configure custom directories, ownerships and version:
 
 ```
 class { 'baculaweb':
-  version           => '8.3.3'
+  version           => '8.6.3'
   root_dir          => '/var/www/html/bacula-web',
   extract_base_dir  => '/opt/bacula-web',
   user              => 'apache',
@@ -129,7 +130,7 @@ Using Hiera:
 
 ```
 baculaweb:
-  version: '8.3.3'
+  version: '8.6.3'
   root_dir: '/var/www/html/bacula-web'
   extract_base_dir: '/opt/bacula-web'
   user: 'apache'

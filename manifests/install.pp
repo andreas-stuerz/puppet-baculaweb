@@ -9,8 +9,9 @@ class baculaweb::install {
     $baculaweb::extract_base_dir,
     $baculaweb::extract_dir
   ]:
-    ensure  => directory,
-    recurse => true
+    ensure    => directory,
+    recurse   => true,
+    max_files => -1
   }
 
   archive { $baculaweb::archive_path:

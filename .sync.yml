@@ -1,1 +1,40 @@
 ---
+".gitlab-ci.yml":
+  delete: true
+".rubocop.yml":
+  default_configs:
+    inherit_from: ".rubocop_todo.yml"
+    require:
+      - rubocop-i18n
+      - rubocop-rspec
+".travis.yml":
+  deploy_to_forge:
+    enabled: false
+  branches:
+    - release
+    - development
+  use_litmus: true
+  litmus:
+    provision_list:
+      - travis_deb
+      - travis_ub
+      - travis_el6
+      - travis_el7
+      - travis_el8
+      - ---travis_el
+  simplecov: true
+appveyor.yml:
+  delete: true
+Gemfile:
+  optional:
+    ":development":
+      - gem: puppet-lint-i18n
+Rakefile:
+  requires:
+    - puppet_pot_generator/rake_tasks
+spec/spec_helper.rb:
+  spec_overrides:
+    - require 'spec_helper_local'
+  coverage_report: true
+"  changelog_user": andeman
+

@@ -14,7 +14,6 @@
 - [Reference](#reference)
 - [Limitations](#limitations)
 - [Development](#development)
-  - [Setup testing and development environment (MacOSX)](#setup-testing-and-development-environment-macosx)
   - [Running acceptance tests](#running-acceptance-tests)
   - [Running unit tests](#running-unit-tests)
 - [Release Notes](#release-notes)
@@ -197,63 +196,27 @@ For a list of supported operating systems, see [metadata.json](metadata.json)
 
 This module uses [puppet_litmus](https://github.com/puppetlabs/puppet_litmus) for running acceptance tests.
 
-### Setup testing and development environment (MacOSX)
-
-Install required software with [brew](https://brew.sh/)
+### Running acceptance tests
+Create test environment:
 ```
-brew cask install docker
-brew cask install puppetlabs/puppet/pdk
-brew cask install puppet-bolt
-brew install rbenv
-rbenv init
-echo 'eval "$(rbenv init -)"' >> $HOME/.zshrc
-curl -fsSL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-doctor | bash
-rbenv install 2.6.5
+./scripts/create_test_env.sh
 ```
 
-Then execute the following command in the root dir of the module:
+Run the acceptance tests:
 ```
-rbenv local 2.6.5
-gem install bundle
-bundle install --path .bundle/gems/
-
+./scripts/run_tests.sh
 ```
 
-To configure the CentOS docker container:
+Remove the test environment:
 ```
-bundle exec rake 'litmus:provision_list[default]'
-bolt command run 'yum -y install http php php php-gettext php-mysql php-pdo php-pgsql php-process' -n localhost:2222 -i inventory.yaml
-bolt command run 'service httpd start' -n localhost:2222 -i inventory.yaml 
-
-docker exec -it waffleimage_centos7_-2222 /bin/bash
-
-vim /etc/httpd/conf.d/bacula-web.conf
-<Directory /var/www/html/bacula-web>
-  AllowOverride All
-</Directory>
-
-vim /etc/php.ini
-date.timezone = Europe/Berlin
-
-service httpd restart
-
+./scripts/remove_test_env.sh
 ```
 
-Build ssh tunnel and access the baculaweb application:
+Build ssh tunnel and access the baculaweb application (user/pw: root/root):
 ```
 ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@localhost -p 2222 -L 27000:localhost:80 -Nf
-http://localhost:27000/
 ```
 http://localhost:27000/
-
-### Running acceptance tests
-
-Update module code in container & run tests:
-```
-bolt command run 'puppet module uninstall andeman-baculaweb' -n localhost:2222 -i inventory.yaml 
-bundle exec rake litmus:install_module
-bundle exec rake litmus:acceptance:parallel
-```
 
 ### Running unit tests
 ```

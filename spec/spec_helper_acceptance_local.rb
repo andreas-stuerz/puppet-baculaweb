@@ -23,6 +23,18 @@ def setup_webserver
     posix   => {},
   MANIFEST
 
+  if %r{debian|ubuntu}.match?(os[:family])
+    php_extensions = <<-MANIFEST
+      gd      => {},
+      json    => {},
+      pdo     => {},
+      pgsql   => {},
+      mysqlnd => {},
+      posix   => {},
+      sqlite3 => {},
+    MANIFEST
+  end
+
   if os[:family] == 'redhat' && os[:release].to_i == 7
     pp_repo = <<-MANIFEST
       yumrepo { 'epel':
@@ -84,6 +96,9 @@ def setup_webserver
     pp_php = <<-MANIFEST
       package_prefix => 'php-',
     MANIFEST
+
+
+
   end
 
   pp_setup = <<-MANIFEST

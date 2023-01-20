@@ -14,6 +14,26 @@ def setup_webserver
   php_version = 'undef'
   pp_php = ''
   sudo_package = 'sudo'
+  php_extensions = <<-MANIFEST
+    gd      => {},
+    json    => {},
+    pdo     => {},
+    pgsql   => {},
+    mysqlnd => {},
+    posix   => {},
+  MANIFEST
+
+  if %r{debian|ubuntu}.match?(os[:family])
+    php_extensions = <<-MANIFEST
+      gd      => {},
+      json    => {},
+      pdo     => {},
+      pgsql   => {},
+      mysqlnd => {},
+      posix   => {},
+      sqlite3 => {},
+    MANIFEST
+  end
 
   if os[:family] == 'redhat' && os[:release].to_i == 7
     pp_repo = <<-MANIFEST
@@ -37,6 +57,16 @@ def setup_webserver
     pp_php = <<-MANIFEST
       package_prefix => 'php74-',
     MANIFEST
+
+    php_extensions = <<-MANIFEST
+      gd        => {},
+      json      => {},
+      pdo       => {},
+      pgsql     => {},
+      mysqlnd   => {},
+      process   => {},
+    MANIFEST
+
   end
 
   if os[:family] == 'redhat' && os[:release].to_i == 8
@@ -66,6 +96,7 @@ def setup_webserver
     pp_php = <<-MANIFEST
       package_prefix => 'php-',
     MANIFEST
+
   end
 
   pp_setup = <<-MANIFEST
@@ -130,12 +161,7 @@ def setup_webserver
         'Date/date.timezone' => 'Europe/Berlin',
       },
       extensions => {
-        gd      => {},
-        json    => {},
-        pdo     => {},
-        pgsql   => {},
-        mysqlnd => {},
-        posix   => {},
+      #{php_extensions}
       },
       notify => Service['httpd'],
     }

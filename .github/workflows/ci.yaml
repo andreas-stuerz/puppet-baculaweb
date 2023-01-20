@@ -3,10 +3,9 @@ name: ci
 
 on:
   push:
-    branches: [main]
+    branches: [master]
   pull_request:
-    branches: [main]
-  workflow_dispatch:
+    branches: [master]
 
 jobs:
   check:
@@ -36,7 +35,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: ['deb10', 'deb11', 'el7', 'el8', 'rocky8', 'ub1804', 'ub2004', 'ub2204']
+        os: ['deb10', 'deb11', 'el7', 'el8', 'rocky8', 'ub2004']
         puppet_version: [6,7]
 
     name: Acceptance / ${{ matrix.os }} / Puppet ${{ matrix.puppet_version }}

@@ -17,7 +17,7 @@
 
 ## Classes
 
-### `baculaweb`
+### <a name="baculaweb"></a>`baculaweb`
 
 == Class: baculaweb
 
@@ -26,15 +26,41 @@
 
 #### Parameters
 
-The following parameters are available in the `baculaweb` class.
+The following parameters are available in the `baculaweb` class:
 
-##### `version`
+* [`version`](#-baculaweb--version)
+* [`archive_name`](#-baculaweb--archive_name)
+* [`user`](#-baculaweb--user)
+* [`group`](#-baculaweb--group)
+* [`archive_path`](#-baculaweb--archive_path)
+* [`mirror_base_url`](#-baculaweb--mirror_base_url)
+* [`mirror`](#-baculaweb--mirror)
+* [`extract_base_dir`](#-baculaweb--extract_base_dir)
+* [`data_dir`](#-baculaweb--data_dir)
+* [`data_dir_assets_protected_path`](#-baculaweb--data_dir_assets_protected_path)
+* [`extract_dir`](#-baculaweb--extract_dir)
+* [`extract_creates`](#-baculaweb--extract_creates)
+* [`archive_symlink_to_root_dir`](#-baculaweb--archive_symlink_to_root_dir)
+* [`data_dir_symlink`](#-baculaweb--data_dir_symlink)
+* [`root_dir`](#-baculaweb--root_dir)
+* [`config_path`](#-baculaweb--config_path)
+* [`cache_path`](#-baculaweb--cache_path)
+* [`assets_protected_path`](#-baculaweb--assets_protected_path)
+* [`show_inactive_clients`](#-baculaweb--show_inactive_clients)
+* [`hide_empty_pools`](#-baculaweb--hide_empty_pools)
+* [`datetime_format`](#-baculaweb--datetime_format)
+* [`enable_users_auth`](#-baculaweb--enable_users_auth)
+* [`debug`](#-baculaweb--debug)
+* [`language`](#-baculaweb--language)
+* [`catalog_db`](#-baculaweb--catalog_db)
+
+##### <a name="-baculaweb--version"></a>`version`
 
 Data type: `String`
 
 This version of baculaweb will be installed
 
-##### `archive_name`
+##### <a name="-baculaweb--archive_name"></a>`archive_name`
 
 Data type: `String`
 
@@ -42,19 +68,19 @@ The filename of the archive which will be fetched from the mirror
 
 Default value: `"bacula-web-${version}.tgz"`
 
-##### `user`
+##### <a name="-baculaweb--user"></a>`user`
 
 Data type: `String`
 
 The user under which the webserver is running
 
-##### `group`
+##### <a name="-baculaweb--group"></a>`group`
 
 Data type: `String`
 
 The group under which the webserver is running
 
-##### `archive_path`
+##### <a name="-baculaweb--archive_path"></a>`archive_path`
 
 Data type: `Stdlib::Compat::Absolute_path`
 
@@ -62,13 +88,13 @@ The path where the fetched archive from the mirror will be saved
 
 Default value: `"${extract_base_dir}/${archive_name}"`
 
-##### `mirror_base_url`
+##### <a name="-baculaweb--mirror_base_url"></a>`mirror_base_url`
 
 Data type: `Variant[Stdlib::HTTPUrl,Stdlib::HTTPSUrl]`
 
 The base url from where the archive will be downloaded
 
-##### `mirror`
+##### <a name="-baculaweb--mirror"></a>`mirror`
 
 Data type: `Variant[Stdlib::HTTPUrl,Stdlib::HTTPSUrl]`
 
@@ -76,19 +102,19 @@ The complete URL to download the archive
 
 Default value: `"${mirror_base_url}/v${version}/${archive_name}"`
 
-##### `extract_base_dir`
+##### <a name="-baculaweb--extract_base_dir"></a>`extract_base_dir`
 
 Data type: `Stdlib::Compat::Absolute_path`
 
 The base directory for extracting the archive
 
-##### `data_dir`
+##### <a name="-baculaweb--data_dir"></a>`data_dir`
 
 Data type: `Stdlib::Compat::Absolute_path`
 
 The directory wich holds persistent data for baculaweb
 
-##### `data_dir_assets_protected_path`
+##### <a name="-baculaweb--data_dir_assets_protected_path"></a>`data_dir_assets_protected_path`
 
 Data type: `Stdlib::Compat::Absolute_path`
 
@@ -96,7 +122,7 @@ Subfolder for assets/protected in data_dir
 
 Default value: `"${data_dir}/protected"`
 
-##### `extract_dir`
+##### <a name="-baculaweb--extract_dir"></a>`extract_dir`
 
 Data type: `Stdlib::Compat::Absolute_path`
 
@@ -104,7 +130,7 @@ The full path of the directory where to save the archive for the specific versio
 
 Default value: `"${extract_base_dir}/v${version}"`
 
-##### `extract_creates`
+##### <a name="-baculaweb--extract_creates"></a>`extract_creates`
 
 Data type: `Stdlib::Compat::Absolute_path`
 
@@ -112,25 +138,25 @@ The path of the directory that will be created after extracting the specific ver
 
 Default value: `"${extract_dir}/bacula-web-${version}"`
 
-##### `archive_symlink_to_root_dir`
+##### <a name="-baculaweb--archive_symlink_to_root_dir"></a>`archive_symlink_to_root_dir`
 
 Data type: `Boolean`
 
 Whether the extracted archive should be symlinked to the document root directory
 
-##### `data_dir_symlink`
+##### <a name="-baculaweb--data_dir_symlink"></a>`data_dir_symlink`
 
 Data type: `Boolean`
 
 Whether the data dir should be symlinked. This ensures data persistence after an upgrade e.g. user database.
 
-##### `root_dir`
+##### <a name="-baculaweb--root_dir"></a>`root_dir`
 
 Data type: `Stdlib::Compat::Absolute_path`
 
 The document root directory for the application
 
-##### `config_path`
+##### <a name="-baculaweb--config_path"></a>`config_path`
 
 Data type: `Stdlib::Compat::Absolute_path`
 
@@ -138,7 +164,7 @@ The path of the application config file
 
 Default value: `"${root_dir}/application/config/config.php"`
 
-##### `cache_path`
+##### <a name="-baculaweb--cache_path"></a>`cache_path`
 
 Data type: `Stdlib::Compat::Absolute_path`
 
@@ -146,7 +172,7 @@ The path of the application cache directory
 
 Default value: `"${root_dir}/application/views/cache"`
 
-##### `assets_protected_path`
+##### <a name="-baculaweb--assets_protected_path"></a>`assets_protected_path`
 
 Data type: `Stdlib::Compat::Absolute_path`
 
@@ -154,48 +180,55 @@ The path of the application assets directory
 
 Default value: `"${root_dir}/application/assets/protected"`
 
-##### `show_inactive_clients`
+##### <a name="-baculaweb--show_inactive_clients"></a>`show_inactive_clients`
 
 Data type: `Boolean`
 
 Show inactive clients or not
 
-##### `hide_empty_pools`
+##### <a name="-baculaweb--hide_empty_pools"></a>`hide_empty_pools`
 
 Data type: `Boolean`
 
 Hide empty pools
 
-##### `datetime_format`
+##### <a name="-baculaweb--datetime_format"></a>`datetime_format`
 
 Data type: `String`
 
 Change default date and time format
 
-##### `enable_users_auth`
+##### <a name="-baculaweb--enable_users_auth"></a>`enable_users_auth`
 
 Data type: `Boolean`
 
 Enable or disable users authentication - This settings is useful if you already authenticate users on Web server side,
 using .htpasswd or LDAP authentication (mod_auth_ldap or any other).
 
-##### `debug`
+##### <a name="-baculaweb--debug"></a>`debug`
 
 Data type: `Boolean`
 
 Enable or disable debug mode - Debug mode could be helpful to troubleshoot Bacula-Web setup problem
 
-##### `language`
+##### <a name="-baculaweb--language"></a>`language`
 
-Data type: `Enum['en_US', 'be_BY', 'ca_ES', 'pl_PL', 'ru_RU', 'zh_CN', 'no_NO',
-  'ja_JP', 'sv_SE', 'es_ES', 'de_DE', 'it_IT', 'fr_FR', 'pt_BR', 'nl_NL']`
+Data type:
+
+```puppet
+Enum['en_US', 'be_BY', 'ca_ES', 'pl_PL', 'ru_RU', 'zh_CN', 'no_NO',
+  'ja_JP', 'sv_SE', 'es_ES', 'de_DE', 'it_IT', 'fr_FR', 'pt_BR', 'nl_NL']
+```
 
 Set displayed language - choose from
 ['en_US', 'be_BY', 'ca_ES', 'pl_PL', 'ru_RU', 'zh_CN', 'no_NO', 'ja_JP', 'sv_SE', 'es_ES', 'de_DE', 'it_IT', 'fr_FR', 'pt_BR', 'nl_NL']
 
-##### `catalog_db`
+##### <a name="-baculaweb--catalog_db"></a>`catalog_db`
 
-Data type: `Array[Struct[{
+Data type:
+
+```puppet
+Array[Struct[{
         label     => String,
         host      => Optional[String],
         login     => Optional[String],
@@ -203,7 +236,8 @@ Data type: `Array[Struct[{
         db_name   => Optional[String],
         db_type   => Enum['mysql', 'pgsql', 'sqlite'],
         db_port   => Optional[Integer],
-  }]]`
+  }]]
+```
 
 Database connection settings for the bacula catalog databases
 

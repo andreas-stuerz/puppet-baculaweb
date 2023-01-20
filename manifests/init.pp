@@ -20,12 +20,16 @@
 #   The complete URL to download the archive
 # @param extract_base_dir
 #   The base directory for extracting the archive
+# @param data_dir
+#   The directory wich holds persistent data e.g. the user database
 # @param extract_dir
 #   The full path of the directory where to save the archive for the specific version
 # @param extract_creates
 #   The path of the directory that will be created after extracting the specific version
 # @param archive_symlink_to_root_dir
 #   Whether the extracted archive should be symlinked to the document root directory
+# @param data_dir_symlink
+#   Whether the data dir should be symlinked. This ensures data persistence after an upgrade e.g. user database.
 # @param root_dir
 #   The document root directory for the application
 # @param config_path
@@ -51,20 +55,23 @@
 #
 class baculaweb (
   String $version,
-  String $archive_name,
+  String $archive_name = "bacula-web-${version}.tgz",
   String $user,
   String $group,
-  Stdlib::Compat::Absolute_path $archive_path,
-  Variant[Stdlib::HTTPUrl,Stdlib::HTTPSUrl] $mirror_base_url,
-  Variant[Stdlib::HTTPUrl,Stdlib::HTTPSUrl] $mirror,
   Stdlib::Compat::Absolute_path $extract_base_dir,
-  Stdlib::Compat::Absolute_path $extract_dir,
-  Stdlib::Compat::Absolute_path $extract_creates,
+  Stdlib::Compat::Absolute_path $data_dir,
+  Stdlib::Compat::Absolute_path $data_dir_assets_protected_path = "${data_dir}/protected",
+  Stdlib::Compat::Absolute_path $archive_path = "${extract_base_dir}/${archive_name}",
+  Variant[Stdlib::HTTPUrl,Stdlib::HTTPSUrl] $mirror_base_url,
+  Variant[Stdlib::HTTPUrl,Stdlib::HTTPSUrl] $mirror = "${mirror_base_url}/v${version}/${archive_name}",
+  Stdlib::Compat::Absolute_path $extract_dir = "${extract_base_dir}/v${version}",
+  Stdlib::Compat::Absolute_path $extract_creates = "${extract_dir}/bacula-web-${version}",
   Boolean $archive_symlink_to_root_dir,
+  Boolean $data_dir_symlink,
   Stdlib::Compat::Absolute_path $root_dir,
-  Stdlib::Compat::Absolute_path $config_path,
-  Stdlib::Compat::Absolute_path $cache_path,
-  Stdlib::Compat::Absolute_path $assets_protected_path,
+  Stdlib::Compat::Absolute_path $config_path = "${root_dir}/application/config/config.php",
+  Stdlib::Compat::Absolute_path $cache_path = "${root_dir}/application/views/cache",
+  Stdlib::Compat::Absolute_path $assets_protected_path = "${root_dir}/application/assets/protected",
   Boolean $show_inactive_clients,
   Boolean $hide_empty_pools,
   String $datetime_format,
@@ -82,6 +89,7 @@ class baculaweb (
     db_port   => Optional[Integer],
   }]] $catalog_db,
 ) {
+
   contain baculaweb::install
   contain baculaweb::config
 

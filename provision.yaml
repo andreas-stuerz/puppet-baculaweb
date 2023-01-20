@@ -1,19 +1,54 @@
 ---
 default:
+  provisioner: docker_exp
+  images: ['litmusimage/centos:8']
+  vars: '{docker_run_opts: ["-p 8091:80"]}'
+vagrant:
+  provisioner: vagrant
+  images: ['centos/7', 'generic/ubuntu2004']
+deb_all:
+  provisioner: docker
+  images: ['litmusimage/debian:10', 'litmusimage/debian:11']
+el_all:
+  provisioner: docker
+  images: ['litmusimage/centos:7', 'litmusimage/centos:8']
+  # The most reliable workaround for the docker/systemd incompatibility.
+  # see https://github.com/docker/for-linux/issues/835
+  # see https://github.com/moby/moby/issues/38749
+  vars: '{docker_run_opts: ["-v /sys/fs/cgroup:/sys/fs/cgroup:ro"]}'
+ub_all:
+  provisioner: docker
+  images: ['litmusimage/ubuntu:20.04', 'litmusimage/ubuntu:22.04']
+gha_deb10:
+  provisioner: docker
+  images: ['litmusimage/debian:10']
+gha_deb11:
+  provisioner: docker
+  images: ['litmusimage/debian:11']
+gha_el7:
   provisioner: docker
   images: ['litmusimage/centos:7']
-travis_deb:
-  provisioner: docker
-  images: ['litmusimage/debian:8', 'litmusimage/debian:9', 'litmusimage/debian:10']
-travis_ub:
-  provisioner: docker
-  images: ['litmusimage/ubuntu:14.04', 'litmusimage/ubuntu:16.04', 'litmusimage/ubuntu:18.04']
-travis_el6:
-  provisioner: docker
-  images: ['litmusimage/centos:6', 'litmusimage/scientificlinux:6']
-travis_el7:
-  provisioner: docker
-  images: ['litmusimage/centos:7', 'litmusimage/oraclelinux:7', 'litmusimage/scientificlinux:7']
-travis_el8:
+  # The most reliable workaround for the docker/systemd incompatibility.
+  # see https://github.com/docker/for-linux/issues/835
+  # see https://github.com/moby/moby/issues/38749
+  vars: '{docker_run_opts: ["-v /sys/fs/cgroup:/sys/fs/cgroup:ro"]}'
+gha_el8:
   provisioner: docker
   images: ['litmusimage/centos:8']
+  # The most reliable workaround for the docker/systemd incompatibility.
+  # see https://github.com/docker/for-linux/issues/835
+  # see https://github.com/moby/moby/issues/38749
+  vars: '{docker_run_opts: ["-v /sys/fs/cgroup:/sys/fs/cgroup:ro"]}'
+gha_rocky8:
+  provisioner: docker
+  images: ['litmusimage/rockylinux:8']
+  # The most reliable workaround for the docker/systemd incompatibility.
+  # see https://github.com/docker/for-linux/issues/835
+  # see https://github.com/moby/moby/issues/38749
+  vars: '{docker_run_opts: ["-v /sys/fs/cgroup:/sys/fs/cgroup:ro"]}'
+gha_ub2004:
+  provisioner: docker
+  images: ['litmusimage/ubuntu:20.04']
+gha_ub2204:
+  provisioner: docker
+  images: ['litmusimage/ubuntu:22.04']

@@ -53,6 +53,15 @@ All parameters for the baculaweb module are contained within the main baculaweb 
 include baculaweb
 ```
 
+### Default User and Password for fresh installs
+After installation the default user is **admin** and the default password is **password**. You should change this after installation.
+
+See: https://docs.bacula-web.org/en/latest/02_install/finalize.html#reset-user-password
+
+
+The default application.db is only deployed once. Data is persisted between upgrades in `baculaweb::data_dir`.
+
+
 ### Configure bacula catalog databases
 To get baculaweb up and running configure at least one bacula catalog database with the paramter catalog_db.
 
@@ -199,28 +208,27 @@ This module uses [puppet_litmus](https://github.com/puppetlabs/puppet_litmus) fo
 ### Running acceptance tests
 Create test environment:
 ```
-./scripts/create_test_env.sh
+./scripts/create_test_env
 ```
 
 Run the acceptance tests:
 ```
-./scripts/run_tests.sh
+./scripts/run_tests
 ```
+
+(Optional) Access the baculaweb application (user/pw: admin/password):
+
+http://127.0.0.1:8091/bacula-web
+
 
 Remove the test environment:
 ```
-./scripts/remove_test_env.sh
+./scripts/remove_test_env
 ```
-
-Build ssh tunnel and access the baculaweb application (user/pw: root/root):
-```
-ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@localhost -p 2222 -L 27000:localhost:80 -Nf
-```
-http://localhost:27000/
 
 ### Running unit tests
 ```
-pdk test unit
+./scripts/unit_tests
 ```
 
 ## Release Notes

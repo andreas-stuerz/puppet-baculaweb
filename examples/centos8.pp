@@ -1,17 +1,22 @@
 yumrepo { 'epel':
-  descr    => 'Extra Packages for Enterprise Linux $releasever - $basearch',
-  baseurl  => 'http://ftp.fau.de/epel/$releasever/$basearch',
-  gpgkey   => 'http://ftp.fau.de/epel/RPM-GPG-KEY-EPEL-7',
-  enabled  => 1,
-  gpgcheck => 1,
+  descr     => 'Extra Packages for Enterprise Linux $releasever - $basearch',
+  metalink  => 'https://mirrors.fedoraproject.org/metalink?repo=epel-$releasever&arch=$basearch&infra=$infra&content=$contentdir',
+  gpgkey    => 'http://ftp.fau.de/epel/RPM-GPG-KEY-EPEL-8',
+  enabled   => 1,
+  gpgcheck  => 1,
 }
-
-yumrepo { 'ius':
-  descr    => 'IUS Packages for Enterprise Linux $releasever - $basearch',
-  baseurl  => 'https://repo.ius.io/$releasever/$basearch/',
-  gpgkey   => 'https://repo.ius.io/RPM-GPG-KEY-IUS-7',
+yumrepo { 'remi':
+  descr    => 'Remi RPM repository - $releasever/$basearch',
+  mirrorlist  => 'http://cdn.remirepo.net/enterprise/$releasever/remi/$basearch/mirror',
+  gpgkey   => 'https://rpms.remirepo.net/RPM-GPG-KEY-remi2018',
   enabled  => 1,
   gpgcheck => 1,
+  priority => 10,
+}
+package { 'php':
+  ensure   => '7.4',
+  provider => 'dnfmodule',
+  enable_only => true
 }
 
 class { 'apache':
@@ -21,17 +26,15 @@ class { 'apache':
 class { 'apache::mod::proxy':
   proxy_requests => 'Off',
 }
-class { 'apache::mod::proxy_fcgi':
+class { 'apache::mod::proxy_fcgi': }
 
-}
 class { 'apache::mod::fcgid':
   options => {
     'FcgidIPCDir'  => '/var/run/fcgidsock',
     'SharememPath' => '/var/run/fcgid_shm',
-    'AddHandler'   => 'fcgid-script .fcgi  fcgi',
+    'AddHandler'   => 'fcgid-script .fcgi fcgi',
   },
 }
-
 
 apache::vhost { 'bacula_web':
   servername     => $::fqdn,
@@ -53,7 +56,7 @@ class { '::php::globals':
 }
 
 class { '::php':
-  package_prefix => 'php74-',
+  package_prefix => 'php-',
   pear           => false,
   fpm            => true,
   settings       => {
@@ -65,7 +68,6 @@ class { '::php':
     json    => {},
     pdo     => {},
     pgsql   => {},
-    posix   => {},
     mysqlnd => {},
     posix   => {},
   },

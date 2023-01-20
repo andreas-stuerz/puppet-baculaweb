@@ -5,22 +5,22 @@
 #
 class baculaweb::install {
   file { [
-    $baculaweb::extract_base_dir,
-    $baculaweb::extract_dir,
-    $baculaweb::data_dir,
-  ]:
-    ensure    => directory,
-    recurse   => true,
-    max_files => -1
+      $baculaweb::extract_base_dir,
+      $baculaweb::extract_dir,
+      $baculaweb::data_dir,
+    ]:
+      ensure    => directory,
+      recurse   => true,
+      max_files => -1,
   }
 
   file { [
-    $baculaweb::data_dir_assets_protected_path,
-  ]:
-    mode      => '0755',
-    owner     => $baculaweb::user,
-    ensure    => directory,
-    max_files => -1
+      $baculaweb::data_dir_assets_protected_path,
+    ]:
+      ensure    => directory,
+      owner     => $baculaweb::user,
+      mode      => '0755',
+      max_files => -1,
   }
 
   archive { $baculaweb::archive_path:
@@ -30,7 +30,7 @@ class baculaweb::install {
     extract_flags => '-x --no-same-owner -f',
     creates       => $baculaweb::extract_creates,
     cleanup       => true,
-    require       => File[$baculaweb::extract_dir]
+    require       => File[$baculaweb::extract_dir],
   }
 
   if $baculaweb::archive_symlink_to_root_dir {
@@ -39,20 +39,20 @@ class baculaweb::install {
       target  => $baculaweb::extract_creates,
       owner   => $baculaweb::user,
       group   => $baculaweb::group,
-      require => Archive[$baculaweb::archive_path]
+      require => Archive[$baculaweb::archive_path],
     }
   }
 
   if $baculaweb::data_dir_symlink {
     file { "${baculaweb::data_dir_assets_protected_path}/.htaccess":
-      ensure  => file,
-      source  => 'puppet:///modules/baculaweb/htaccess_protected.epp',
-      mode    => '0644',
+      ensure => file,
+      source => 'puppet:///modules/baculaweb/htaccess_protected.epp',
+      mode   => '0644',
     }
 
     # create default appliaction database if it not exists
     # Login with admin:password
-    file {"${baculaweb::data_dir_assets_protected_path}/application.db":
+    file { "${baculaweb::data_dir_assets_protected_path}/application.db":
       ensure  => file,
       replace => 'no',
       source  => 'puppet:///modules/baculaweb/application.db',
@@ -62,7 +62,7 @@ class baculaweb::install {
       require => File[$baculaweb::data_dir_assets_protected_path],
     }
 
-    file { "symlink_{$baculaweb::assets_protected_path}":
+    file { "symlink_{${baculaweb::assets_protected_path}}":
       ensure  => link,
       force   => true,
       path    => $baculaweb::assets_protected_path,
@@ -74,9 +74,7 @@ class baculaweb::install {
         File[$baculaweb::data_dir_assets_protected_path],
         File[$baculaweb::root_dir],
         File["${baculaweb::data_dir_assets_protected_path}/.htaccess"],
-      ]
+      ],
     }
   }
-
 }
-

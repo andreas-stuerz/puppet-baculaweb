@@ -1,7 +1,7 @@
 {
   "name": "andeman-baculaweb",
-  "version": "1.0.0",
-  "author": "Andreas Stuerz",
+  "version": "0.1.0",
+  "author": "andeman",
   "summary": "Puppet module for baculaweb - a web based reporting and monitoring tool for Bacula",
   "license": "Apache-2.0",
   "source": "https://github.com/andeman/puppet-baculaweb",

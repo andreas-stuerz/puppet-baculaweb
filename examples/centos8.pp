@@ -1,22 +1,22 @@
 yumrepo { 'epel':
-  descr     => 'Extra Packages for Enterprise Linux $releasever - $basearch',
-  metalink  => 'https://mirrors.fedoraproject.org/metalink?repo=epel-$releasever&arch=$basearch&infra=$infra&content=$contentdir',
-  gpgkey    => 'http://ftp.fau.de/epel/RPM-GPG-KEY-EPEL-8',
-  enabled   => 1,
-  gpgcheck  => 1,
-}
-yumrepo { 'remi':
-  descr    => 'Remi RPM repository - $releasever/$basearch',
-  mirrorlist  => 'http://cdn.remirepo.net/enterprise/$releasever/remi/$basearch/mirror',
-  gpgkey   => 'https://rpms.remirepo.net/RPM-GPG-KEY-remi2018',
+  descr    => 'Extra Packages for Enterprise Linux $releasever - $basearch',
+  metalink => 'https://mirrors.fedoraproject.org/metalink?repo=epel-$releasever&arch=$basearch&infra=$infra&content=$contentdir',
+  gpgkey   => 'http://ftp.fau.de/epel/RPM-GPG-KEY-EPEL-8',
   enabled  => 1,
   gpgcheck => 1,
-  priority => 10,
+}
+yumrepo { 'remi':
+  descr      => 'Remi RPM repository - $releasever/$basearch',
+  mirrorlist => 'http://cdn.remirepo.net/enterprise/$releasever/remi/$basearch/mirror',
+  gpgkey     => 'https://rpms.remirepo.net/RPM-GPG-KEY-remi2018',
+  enabled    => 1,
+  gpgcheck   => 1,
+  priority   => 10,
 }
 package { 'php':
-  ensure   => '7.4',
-  provider => 'dnfmodule',
-  enable_only => true
+  ensure      => '7.4',
+  provider    => 'dnfmodule',
+  enable_only => true,
 }
 
 class { 'apache':
@@ -37,25 +37,25 @@ class { 'apache::mod::fcgid':
 }
 
 apache::vhost { 'bacula_web':
-  servername     => $::fqdn,
+  servername     => $facts['networking']['fqdn'],
   port           => '80',
   docroot        => '/var/www/html/bacula-web',
   manage_docroot => false,
   directories    => {
-    path     => '/var/www/html/bacula-web',
+    path           => '/var/www/html/bacula-web',
     allow_override => ['All'],
-    options  => [
+    options        => [
       'FollowSymLinks',
-      'MultiViews'
-    ]
+      'MultiViews',
+    ],
   },
 }
 
-class { '::php::globals':
+class { 'php::globals':
   php_version => '7.4',
 }
 
-class { '::php':
+class { 'php':
   package_prefix => 'php-',
   pear           => false,
   fpm            => true,

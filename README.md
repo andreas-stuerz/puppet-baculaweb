@@ -213,7 +213,7 @@ Create test environment:
 
 Run the acceptance tests:
 ```
-./scripts/run_tests
+./scripts/acceptance_tests
 ```
 
 (Optional) Access the baculaweb application (user/pw: admin/password):

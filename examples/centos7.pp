@@ -22,7 +22,6 @@ class { 'apache::mod::proxy':
   proxy_requests => 'Off',
 }
 class { 'apache::mod::proxy_fcgi':
-
 }
 class { 'apache::mod::fcgid':
   options => {
@@ -32,27 +31,26 @@ class { 'apache::mod::fcgid':
   },
 }
 
-
 apache::vhost { 'bacula_web':
-  servername     => $::fqdn,
+  servername     => $facts['networking']['fqdn'],
   port           => '80',
   docroot        => '/var/www/html/bacula-web',
   manage_docroot => false,
   directories    => {
-    path     => '/var/www/html/bacula-web',
+    path           => '/var/www/html/bacula-web',
     allow_override => ['All'],
-    options  => [
+    options        => [
       'FollowSymLinks',
-      'MultiViews'
-    ]
+      'MultiViews',
+    ],
   },
 }
 
-class { '::php::globals':
+class { 'php::globals':
   php_version => '7.4',
 }
 
-class { '::php':
+class { 'php':
   package_prefix => 'php74-',
   pear           => false,
   fpm            => true,
@@ -65,7 +63,6 @@ class { '::php':
     json    => {},
     pdo     => {},
     pgsql   => {},
-    posix   => {},
     mysqlnd => {},
     posix   => {},
   },

@@ -110,7 +110,7 @@ def setup_webserver
           ],
           addhandlers => {
             extensions => [
-              '.inc', 
+              '.inc',#{' '}
               '.php'
             ],
             handler => 'proxy:fcgi://127.0.0.1:9000/',

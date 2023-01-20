@@ -5,7 +5,10 @@ spec/spec_helper.rb:
   mock_with: ':rspec'
   coverage_report: true
   minimum_code_coverage_percentage: 95
-#Gemfile:
+Gemfile:
+  optional:
+    ":development":
+      - gem: 'github_changelog_generator'
 .github/workflows/nightly.yml:
   unmanaged: true
 .github/workflows/pr_test.yml:

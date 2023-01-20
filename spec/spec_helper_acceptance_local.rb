@@ -97,8 +97,6 @@ def setup_webserver
       package_prefix => 'php-',
     MANIFEST
 
-
-
   end
 
   pp_setup = <<-MANIFEST

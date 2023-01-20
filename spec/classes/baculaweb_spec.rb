@@ -4,6 +4,13 @@ describe 'baculaweb' do
   on_supported_os.each do |os, os_facts|
     context "on #{os}" do
       let(:facts) { os_facts }
+      let(:website_user) do
+        if os_facts[:os]['family'] == 'RedHat'
+          'apache'
+        elsif os_facts[:os]['family'] == 'Debian'
+          'www-data'
+        end
+      end
 
       describe 'Compiles the catalog' do
         it {
@@ -39,7 +46,7 @@ describe 'baculaweb' do
           )
           is_expected.to contain_file('/opt/bacula-web/data/protected').with(
             "ensure": 'directory',
-            "owner": 'apache',
+            "owner": website_user.to_s,
             "mode": '0755',
             "max_files": -1,
           )
@@ -47,8 +54,8 @@ describe 'baculaweb' do
             "ensure": 'file',
             "replace": 'no',
             "source": 'puppet:///modules/baculaweb/application.db',
-            "owner": 'apache',
-            "group": 'apache',
+            "owner": website_user.to_s,
+            "group": website_user.to_s,
             "mode": '0644',
             "require": 'File[/opt/bacula-web/data/protected]',
           )
@@ -62,8 +69,8 @@ describe 'baculaweb' do
             "ensure": 'link',
             "force": true,
             "target": '/opt/bacula-web/data/protected',
-            "owner": 'apache',
-            "group": 'apache',
+            "owner": website_user.to_s,
+            "group": website_user.to_s,
             "mode": '0755',
             "require": [
               'File[/opt/bacula-web/data/protected]',

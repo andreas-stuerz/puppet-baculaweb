@@ -20,12 +20,18 @@
 #   The complete URL to download the archive
 # @param extract_base_dir
 #   The base directory for extracting the archive
+# @param data_dir
+#   The directory wich holds persistent data for baculaweb
+# @param data_dir_assets_protected_path
+#   Subfolder for assets/protected in data_dir
 # @param extract_dir
 #   The full path of the directory where to save the archive for the specific version
 # @param extract_creates
 #   The path of the directory that will be created after extracting the specific version
 # @param archive_symlink_to_root_dir
 #   Whether the extracted archive should be symlinked to the document root directory
+# @param data_dir_symlink
+#   Whether the data dir should be symlinked. This ensures data persistence after an upgrade e.g. user database.
 # @param root_dir
 #   The document root directory for the application
 # @param config_path
@@ -41,50 +47,55 @@
 # @param datetime_format
 #   Change default date and time format
 # @param enable_users_auth
-#   Enable or disable users authentication - This settings is useful if you already authenticate users on Web server side, using .htpasswd or LDAP authentication (mod_auth_ldap or any other).
+#   Enable or disable users authentication - This settings is useful if you already authenticate users on Web server side,
+#   using .htpasswd or LDAP authentication (mod_auth_ldap or any other).
 # @param debug
 #   Enable or disable debug mode - Debug mode could be helpful to troubleshoot Bacula-Web setup problem
 # @param language
-#   Set displayed language - choose from ['en_US', 'be_BY', 'ca_ES', 'pl_PL', 'ru_RU', 'zh_CN', 'no_NO', 'ja_JP', 'sv_SE', 'es_ES', 'de_DE', 'it_IT', 'fr_FR', 'pt_BR', 'nl_NL']
+#   Set displayed language - choose from
+#   ['en_US', 'be_BY', 'ca_ES', 'pl_PL', 'ru_RU', 'zh_CN', 'no_NO', 'ja_JP', 'sv_SE', 'es_ES', 'de_DE', 'it_IT', 'fr_FR', 'pt_BR', 'nl_NL']
 # @param catalog_db
 #   Database connection settings for the bacula catalog databases
 #
 class baculaweb (
   String $version,
-  String $archive_name,
   String $user,
   String $group,
-  Stdlib::Compat::Absolute_path $archive_path,
-  Variant[Stdlib::HTTPUrl,Stdlib::HTTPSUrl] $mirror_base_url,
-  Variant[Stdlib::HTTPUrl,Stdlib::HTTPSUrl] $mirror,
   Stdlib::Compat::Absolute_path $extract_base_dir,
-  Stdlib::Compat::Absolute_path $extract_dir,
-  Stdlib::Compat::Absolute_path $extract_creates,
+  Stdlib::Compat::Absolute_path $data_dir,
+  Variant[Stdlib::HTTPUrl,Stdlib::HTTPSUrl] $mirror_base_url,
   Boolean $archive_symlink_to_root_dir,
+  Boolean $data_dir_symlink,
   Stdlib::Compat::Absolute_path $root_dir,
-  Stdlib::Compat::Absolute_path $config_path,
-  Stdlib::Compat::Absolute_path $cache_path,
-  Stdlib::Compat::Absolute_path $assets_protected_path,
   Boolean $show_inactive_clients,
   Boolean $hide_empty_pools,
   String $datetime_format,
   Boolean $enable_users_auth,
   Boolean $debug,
   Enum['en_US', 'be_BY', 'ca_ES', 'pl_PL', 'ru_RU', 'zh_CN', 'no_NO',
-    'ja_JP', 'sv_SE', 'es_ES', 'de_DE', 'it_IT', 'fr_FR', 'pt_BR', 'nl_NL'] $language,
+  'ja_JP', 'sv_SE', 'es_ES', 'de_DE', 'it_IT', 'fr_FR', 'pt_BR', 'nl_NL'] $language,
   Array[Struct[{
-    label     => String,
-    host      => Optional[String],
-    login     => Optional[String],
-    password  => Optional[String],
-    db_name   => Optional[String],
-    db_type   => Enum['mysql', 'pgsql', 'sqlite'],
-    db_port   => Optional[Integer],
+        label     => String,
+        host      => Optional[String],
+        login     => Optional[String],
+        password  => Optional[String],
+        db_name   => Optional[String],
+        db_type   => Enum['mysql', 'pgsql', 'sqlite'],
+        db_port   => Optional[Integer],
   }]] $catalog_db,
+  String $archive_name = "bacula-web-${version}.tgz",
+  Stdlib::Compat::Absolute_path $data_dir_assets_protected_path = "${data_dir}/protected",
+  Stdlib::Compat::Absolute_path $archive_path = "${extract_base_dir}/${archive_name}",
+  Variant[Stdlib::HTTPUrl,Stdlib::HTTPSUrl] $mirror = "${mirror_base_url}/v${version}/${archive_name}",
+  Stdlib::Compat::Absolute_path $extract_dir = "${extract_base_dir}/v${version}",
+  Stdlib::Compat::Absolute_path $extract_creates = "${extract_dir}/bacula-web-${version}",
+  Stdlib::Compat::Absolute_path $config_path = "${root_dir}/application/config/config.php",
+  Stdlib::Compat::Absolute_path $cache_path = "${root_dir}/application/views/cache",
+  Stdlib::Compat::Absolute_path $assets_protected_path = "${root_dir}/application/assets/protected",
 ) {
   contain baculaweb::install
   contain baculaweb::config
 
-  Class['::baculaweb::install']
-  -> Class['::baculaweb::config']
+  Class['baculaweb::install']
+  -> Class['baculaweb::config']
 }

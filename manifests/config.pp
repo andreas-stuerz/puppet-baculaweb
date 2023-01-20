@@ -4,13 +4,11 @@
 # @api private
 #
 class baculaweb::config {
-
   file { [
-    $baculaweb::cache_path,
-    $baculaweb::assets_protected_path,
-  ]:
-    mode  => '0755',
-    owner => $baculaweb::user,
+      $baculaweb::cache_path,
+    ]:
+      mode  => '0755',
+      owner => $baculaweb::user,
   }
 
   file { $baculaweb::config_path:
@@ -18,5 +16,4 @@ class baculaweb::config {
     owner   => $baculaweb::user,
     group   => $baculaweb::group,
   }
-
 }

@@ -14,7 +14,6 @@
 - [Reference](#reference)
 - [Limitations](#limitations)
 - [Development](#development)
-  - [Setup testing and development environment (MacOSX)](#setup-testing-and-development-environment-macosx)
   - [Running acceptance tests](#running-acceptance-tests)
   - [Running unit tests](#running-unit-tests)
 - [Release Notes](#release-notes)
@@ -53,6 +52,15 @@ All parameters for the baculaweb module are contained within the main baculaweb 
 ```
 include baculaweb
 ```
+
+### Default User and Password for fresh installs
+After installation the default user is **admin** and the default password is **password**. You should change this after installation.
+
+See: https://docs.bacula-web.org/en/latest/02_install/finalize.html#reset-user-password
+
+
+The default application.db is only deployed once. Data is persisted between upgrades in `baculaweb::data_dir`.
+
 
 ### Configure bacula catalog databases
 To get baculaweb up and running configure at least one bacula catalog database with the paramter catalog_db.
@@ -197,67 +205,30 @@ For a list of supported operating systems, see [metadata.json](metadata.json)
 
 This module uses [puppet_litmus](https://github.com/puppetlabs/puppet_litmus) for running acceptance tests.
 
-### Setup testing and development environment (MacOSX)
-
-Install required software with [brew](https://brew.sh/)
-```
-brew cask install docker
-brew cask install puppetlabs/puppet/pdk
-brew cask install puppet-bolt
-brew install rbenv
-rbenv init
-echo 'eval "$(rbenv init -)"' >> $HOME/.zshrc
-curl -fsSL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-doctor | bash
-rbenv install 2.6.5
-```
-
-Then execute the following command in the root dir of the module:
-```
-rbenv local 2.6.5
-gem install bundle
-bundle install --path .bundle/gems/
-
-```
-
-To configure the CentOS docker container:
-```
-bundle exec rake 'litmus:provision_list[default]'
-bolt command run 'yum -y install http php php php-gettext php-mysql php-pdo php-pgsql php-process' -n localhost:2222 -i inventory.yaml
-bolt command run 'service httpd start' -n localhost:2222 -i inventory.yaml 
-
-docker exec -it waffleimage_centos7_-2222 /bin/bash
-
-vim /etc/httpd/conf.d/bacula-web.conf
-<Directory /var/www/html/bacula-web>
-  AllowOverride All
-</Directory>
-
-vim /etc/php.ini
-date.timezone = Europe/Berlin
-
-service httpd restart
-
-```
-
-Build ssh tunnel and access the baculaweb application:
-```
-ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@localhost -p 2222 -L 27000:localhost:80 -Nf
-http://localhost:27000/
-```
-http://localhost:27000/
-
 ### Running acceptance tests
-
-Update module code in container & run tests:
+Create test environment:
 ```
-bolt command run 'puppet module uninstall andeman-baculaweb' -n localhost:2222 -i inventory.yaml 
-bundle exec rake litmus:install_module
-bundle exec rake litmus:acceptance:parallel
+./scripts/create_test_env
+```
+
+Run the acceptance tests:
+```
+./scripts/acceptance_tests
+```
+
+(Optional) Access the baculaweb application (user/pw: admin/password):
+
+http://127.0.0.1:8091/bacula-web
+
+
+Remove the test environment:
+```
+./scripts/remove_test_env
 ```
 
 ### Running unit tests
 ```
-pdk test unit
+./scripts/unit_tests
 ```
 
 ## Release Notes

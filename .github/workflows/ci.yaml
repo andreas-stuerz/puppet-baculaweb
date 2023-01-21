@@ -40,7 +40,7 @@ jobs:
     name: Coverage
     runs-on: ubuntu-20.04
     needs:
-      - check
+      - unit-tests
 
     steps:
       - name: Upload coverage to Codecov
@@ -58,7 +58,7 @@ jobs:
     name: Acceptance / ${{ matrix.os }} / Puppet ${{ matrix.puppet_version }}
     runs-on: ubuntu-20.04
     needs:
-      - check
+      - unit-tests
 
     steps:
       - name: Enable IPv6 on docker

@@ -43,10 +43,18 @@ jobs:
       - unit-tests
 
     steps:
-      - name: Upload coverage to Codecov
-        uses: mysociety/action-pdk@master
+      - name: Checkout source
+        uses: actions/checkout@v2
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
         with:
-          action: 'bundle exec rake spec:simplecov'
+          ruby-version: "2.7"
+          bundler-cache: true
+
+      - name: Run test coverage
+        run: |
+          bundle exec rake spec:simplecov
 
   acceptance:
     strategy:

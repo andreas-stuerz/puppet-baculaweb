@@ -1,3 +1,8 @@
+[![Continous Integration](https://github.com/andeman/puppet-baculaweb/actions/workflows/ci.yaml/badge.svg)](https://github.com/andeman/puppet-baculaweb/actions/workflows/ci.yaml)
+[![codecov](https://codecov.io/gh/andeman/puppet-baculaweb/branch/main/graph/badge.svg?token=0BoY091pEV)](https://codecov.io/gh/andeman/puppet-baculaweb)
+[![Puppet Forge](https://img.shields.io/puppetforge/v/andeman/baculaweb.svg)](https://forge.puppetlabs.com/andeman/baculaweb)
+[![Puppet Forge Downloads](http://img.shields.io/puppetforge/dt/andeman/baculaweb.svg)](https://forge.puppetlabs.com/andeman/baculaweb)
+
 # baculaweb
 
 #### Table of Contents

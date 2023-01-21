@@ -9,7 +9,7 @@ Gemfile:
   optional:
     ":development":
       - gem: 'github_changelog_generator'
-        git: 'https://github.com/github-changelog-generator/github-changelog-generator'
+        version: '= 1.15.2'
 .github/workflows/nightly.yml:
   unmanaged: true
 .github/workflows/pr_test.yml:

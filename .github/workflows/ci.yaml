@@ -31,6 +31,11 @@ jobs:
         with:
           puppet-version: ${{ matrix.puppet_version }}
 
+      - name: Upload coverage to Codecov
+        uses: mysociety/action-pdk@master
+        with:
+          action: 'bundle exec rake spec:simplecov'
+
   acceptance:
     strategy:
       fail-fast: false

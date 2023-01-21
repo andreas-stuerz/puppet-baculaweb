@@ -31,6 +31,16 @@ jobs:
         with:
           puppet-version: ${{ matrix.puppet_version }}
 
+  coverage:
+    strategy:
+      fail-fast: false
+      matrix:
+        puppet_version: [7]
+
+    name: Coverage
+    runs-on: ubuntu-20.04
+
+    steps:
       - name: Upload coverage to Codecov
         uses: mysociety/action-pdk@master
         with:

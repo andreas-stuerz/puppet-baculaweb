@@ -8,7 +8,7 @@ on:
     branches: [master]
 
 jobs:
-  check:
+  unit-tests:
     strategy:
       fail-fast: false
       matrix:
@@ -39,6 +39,8 @@ jobs:
 
     name: Coverage
     runs-on: ubuntu-20.04
+    needs:
+      - check
 
     steps:
       - name: Upload coverage to Codecov
